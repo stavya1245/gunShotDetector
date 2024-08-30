@@ -24,7 +24,7 @@ function startListening(deviceName) {
             analyser.getByteFrequencyData(array);
             const maxVolume = Math.max(...array);
 
-            if (maxVolume > 50) {  // Sound detection threshold
+            if (maxVolume > 100) {  // Sound detection threshold
                 const timestamp = Date.now();
                 socket.send(JSON.stringify({ device: deviceName, timestamp: timestamp }));
             }
