@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gunshot Detection Radar Simulation</title>
+</head>
+<body>
+    <!-- Video background -->
+    <video autoplay muted loop id="backgroundVideo">
+        <source src="anicloud.mov" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Content -->
+    <div class="content">
+     
+        <h1 class="subtle-blink">DETECTING</h1>
+        <div class="radar" id="radar"></div>
+    </div>
+
+    <script>
+        function randomPosition(radius) {
+            const angle = Math.random() * 2 * Math.PI;
+            const r = Math.sqrt(Math.random()) * radius;
+            const x = r * Math.cos(angle);
+            const y = r * Math.sin(angle);
+            return { x, y };
+        }
+
+        function createBlip() {
+            const radar = document.getElementById('radar');
+            const blip = document.createElement('div');
+            blip.className = 'blip';
+            const position = randomPosition(150); // Half of the radar size (300px)
+            blip.style.left = `calc(50% + ${position.x}px - 5px)`; // Center the blip
+            blip.style.top = `calc(50% + ${position.y}px - 5px)`;
+            radar.appendChild(blip);
+
+            // Remove the blip after a short duration to simulate it disappearing
+            setTimeout(() => radar.removeChild(blip), 1000);
+        }
+
+        // Simulate gunshot detection by creating random blips every few seconds
+        setInterval(createBlip, Math.random() * 2000 + 1000); // Random interval between 1-3 seconds
+    </script>
+</body>
+</html>
