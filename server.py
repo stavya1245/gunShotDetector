@@ -5,6 +5,7 @@ import json
 clients = {}
 
 async def handler(websocket, path):
+    print("server started")
     # Receive the initial message with device name and timestamp
     async for message in websocket:
         data = json.loads(message)
