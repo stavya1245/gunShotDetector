@@ -1,21 +1,9 @@
-// script.js
-
 const socket = new WebSocket('ws://localhost:8765');
 
 socket.onopen = function() {
-    console.log("WebSocket connection established.");
     const deviceName = prompt("Enter device name (north, south, left, right):");
     startListening(deviceName);
 };
-
-socket.onerror = function(error) {
-    console.error("WebSocket Error: ", error);
-};
-
-socket.onmessage = function(event) {
-    console.log("Message from server: ", event.data);
-};
-
 
 function startListening(deviceName) {
     navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {

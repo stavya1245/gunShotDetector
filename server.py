@@ -5,7 +5,6 @@ import json
 clients = {}
 
 async def handler(websocket, path):
-    print("server started")
     # Receive the initial message with device name and timestamp
     async for message in websocket:
         data = json.loads(message)
@@ -17,7 +16,7 @@ async def handler(websocket, path):
         print(f"Received from {device_name}: {timestamp}")
 
         # Check if all four devices have reported
-        if len(clients) == 4:
+        if len(clients) == 2:
             # Find the device with the earliest timestamp
             direction = min(clients, key=lambda k: clients[k][1])
             print(f"Sound detected from: {direction}")
@@ -27,7 +26,9 @@ async def handler(websocket, path):
                 await client_websocket.send(direction)
 
 async def main():
-    async with websockets.serve(handler, "localhost", 8765):
-        await asyncio.Future()  # Run forever
+    print("WebSocket server started on ws://localhost:8765")
+    async with websockets.serve(handler, "0.0.0.0", 8765):
+        await asyncio.Future()
+
 
 asyncio.run(main())
